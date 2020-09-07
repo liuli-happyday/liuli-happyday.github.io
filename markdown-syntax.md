@@ -19,6 +19,7 @@ http://github.com - automatic!
 ### Strikethrough
 ~~this~~
 
+### Emphasis
 *This text will be italic*
 _This will also be italic_
 
@@ -27,6 +28,7 @@ __This will also be bold__
 
 _You **can** combine them_
 
+### Blockquotes
 As Kanye West said:
 
 > We're living the future so
