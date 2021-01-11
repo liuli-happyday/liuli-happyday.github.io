@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>在线计算文件</title>
+    <link rel="icon" type="image/x-icon" href="http://47.98.125.20/static/favicon.png">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+<body>
+<div id="app">
+    <div class="upload">
+        <p class="tips_text">点击或拖拽文件至此</p>
+        <input class="upload_input" ref="uploadFile" multiple="true" draggable="true" type="file">
+    </div>
+    <br>
+    <div class="text-danger text-center">使用 JavaScript API 计算，不会上传文件到服务器</div>
+    <hr>
+    <div class="algo-list">
+        <button v-for="algo in algoList" v-text="algo.name" :class="{'btn-primary': algo.selected}" @click="algo.selected=!algo.selected" class="btn btn-default"></button>
+    </div>
+    <br>
+    <!--<div v-for="file in fileList">
+        <h3>
+            <strong v-text="file.name"></strong>
+            <span v-text="file.message"></span>
+            <span v-text="file.size"></span>
+            <span v-text="file.costTime"></span>
+        </h3>
+        <el-table :data="file.hashList">
+            <el-table-column prop="name"></el-table-column>
+            <el-table-column prop="value"></el-table-column>
+        </el-table>
+    </div>-->
+    <table v-if="fileList.length" class="table table-bordered">
+        <tbody>
+        <template v-for="file in fileList">
+            <tr>
+                <td colspan="2" class="alert-info">
+                    <strong v-text="file.name"></strong>
+                    <span v-text="file.message"></span>
+                    <span v-text="file.size"></span>
+                    <span v-text="file.costTime"></span>
+                </td>
+            </tr>
+            <tr v-for="hash in file.hashList">
+                <td v-text="hash.name"></td>
+                <td v-text="hash.value"></td>
+            </tr>
+        </template>
+        </tbody>
+    </table>
+</div>
+<!-- 引入VUE库 -->
+<script src="./js/vue.js"></script>
+<!-- 引入组件库 -->
+<!--<script src="./js/element-ui.js"></script>-->
+<!--引入加密库-->
+<script src="./js/md5.js"></script>
+<script src="./js/pbkdf2.js"></script>
+<script src="./js/ripemd160.js"></script>
+<script src="./js/sha1.js"></script>
+<script src="./js/sha3.js"></script>
+<script src="./js/sha224.js"></script>
+<script src="./js/sha256.js"></script>
+<script src="./js/sha384.js"></script>
+<script src="./js/sha512.js"></script>
+<!--引入主文件-->
+<script src="./js/index.js"></script>
+</body>
+</html>
