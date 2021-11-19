@@ -1,9 +1,5 @@
-# Hello my friend
+# 小工具集合
 
-## Welcome to my blog
+1. [文件进行MD5、SHA1、SHA256、SHA512等计算](https://liuli-happyday.github.io/encrypt/)
 
-```javascript
-function sayHi () {
-    alert('hi);
-}
-```
+To be Continued...
