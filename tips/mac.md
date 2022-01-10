@@ -27,4 +27,4 @@
 2. 删除 SuccessfulExit 属性。
 3. 将 RunAtLoad / KeepAlive 均设为 <false/>
 
-作者：[Kyan](https://www.zhihu.com/question/28268529/answer/355905456)
+来源：[知乎 Kyan](https://www.zhihu.com/question/28268529/answer/355905456)
