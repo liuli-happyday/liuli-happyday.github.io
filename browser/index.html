@@ -28,34 +28,34 @@
         * @author wangxiao<i@muyao.me>
         */
         function detect(ua, platform) {
-            const os = {};
-            const browser = {};
+            var os = {};
+            var browser = {};
 
-            const webkit = ua.match(/Web[kK]it[/]{0,1}([\d.]+)/);
-            const android = ua.match(/(Android);?[\s/]+([\d.]+)?/);
-            const osx = !!ua.match(/\(Macintosh; Intel /);
-            const weixin = ua.match(/MicroMessenger/i);
-            const weibo = ua.match(/Weibo/i);
-            const qq = ua.indexOf('QQ/') !== -1;
-            const ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
-            const ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
-            const iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
-            const webos = ua.match(/(webOS|hpwOS)[\s/]([\d.]+)/);
-            const win = /Win\d{2}|Windows/.test(platform);
-            const wp = ua.match(/Windows Phone ([\d.]+)/);
-            const touchpad = webos && ua.match(/TouchPad/);
-            const kindle = ua.match(/Kindle\/([\d.]+)/);
-            const silk = ua.match(/Silk\/([\d._]+)/);
-            const blackberry = ua.match(/(BlackBerry).*Version\/([\d.]+)/);
-            const bb10 = ua.match(/(BB10).*Version\/([\d.]+)/);
-            const rimtabletos = ua.match(/(RIM\sTablet\sOS)\s([\d.]+)/);
-            const playbook = ua.match(/PlayBook/);
-            const chrome = ua.match(/Chrome\/([\d.]+)/) || ua.match(/CriOS\/([\d.]+)/);
-            const firefox = ua.match(/Firefox\/([\d.]+)/);
-            const firefoxos = ua.match(/\((?:Mobile|Tablet); rv:([\d.]+)\).*Firefox\/[\d.]+/);
-            const ie = ua.match(/MSIE\s([\d.]+)/) || ua.match(/Trident\/[\d](?=[^?]+).*rv:([0-9.].)/);
-            const webview = !chrome && ua.match(/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/);
-            const safari = webview || ua.match(/Version\/([\d.]+)([^S](Safari)|[^M]*(Mobile)[^S]*(Safari))/);
+            var webkit = ua.match(/Web[kK]it[/]{0,1}([\d.]+)/);
+            var android = ua.match(/(Android);?[\s/]+([\d.]+)?/);
+            var osx = !!ua.match(/\(Macintosh; Intel /);
+            var weixin = ua.match(/MicroMessenger/i);
+            var weibo = ua.match(/Weibo/i);
+            var qq = ua.indexOf('QQ/') !== -1;
+            var ipad = ua.match(/(iPad).*OS\s([\d_]+)/);
+            var ipod = ua.match(/(iPod)(.*OS\s([\d_]+))?/);
+            var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
+            var webos = ua.match(/(webOS|hpwOS)[\s/]([\d.]+)/);
+            var win = /Win\d{2}|Windows/.test(platform);
+            var wp = ua.match(/Windows Phone ([\d.]+)/);
+            var touchpad = webos && ua.match(/TouchPad/);
+            var kindle = ua.match(/Kindle\/([\d.]+)/);
+            var silk = ua.match(/Silk\/([\d._]+)/);
+            var blackberry = ua.match(/(BlackBerry).*Version\/([\d.]+)/);
+            var bb10 = ua.match(/(BB10).*Version\/([\d.]+)/);
+            var rimtabletos = ua.match(/(RIM\sTablet\sOS)\s([\d.]+)/);
+            var playbook = ua.match(/PlayBook/);
+            var chrome = ua.match(/Chrome\/([\d.]+)/) || ua.match(/CriOS\/([\d.]+)/);
+            var firefox = ua.match(/Firefox\/([\d.]+)/);
+            var firefoxos = ua.match(/\((?:Mobile|Tablet); rv:([\d.]+)\).*Firefox\/[\d.]+/);
+            var ie = ua.match(/MSIE\s([\d.]+)/) || ua.match(/Trident\/[\d](?=[^?]+).*rv:([0-9.].)/);
+            var webview = !chrome && ua.match(/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/);
+            var safari = webview || ua.match(/Version\/([\d.]+)([^S](Safari)|[^M]*(Mobile)[^S]*(Safari))/);
 
             // Todo: clean this up with a better OS/browser seperation:
             // - discern (more) between multiple browsers on android
