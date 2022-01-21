@@ -30,6 +30,7 @@
             padding: 0 16px;
             height: 32px;
             line-height: 32px;
+            margin: 0;
         }
         .content {
             padding: 12px 16px;
@@ -195,6 +196,8 @@
 <body>
 <div class="page month_goal">
 
+    <h1 class="page_title">本月目标</h1>
+    
     <div class="content">
         <div class="current_money">
             当前奖金：<span class="amount"><span class="totalReward"></span>元
@@ -326,6 +329,11 @@
         // console.log('hello jquery');
         var search = window.location.search;
         var CsId = getParams('CsId');
+        var color = getParams('color');
+        if (color && color.length === 6) {
+            // d8e7f2
+            $('.page_title').css({background: '#' + color});
+        }
         // console.log('hello jquery==>', CsId);
         var month = {
             count: 0,
