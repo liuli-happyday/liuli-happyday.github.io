@@ -374,6 +374,7 @@
             }
             $.get({
                 url: '/groupApi/stat/rank',
+                dataType: 'json',
                 data: { CsId: CsId },
                 success: function(res) {
                     // console.log(res);
@@ -382,7 +383,7 @@
                     if ("refresh" === handle) {
                         showMsg('已刷新');
                     }
-                    res = JSON.parse(res);
+                    // res = JSON.parse(res);
 
                     var StatusCode = res.StatusCode;
                     var Message = res.Message;
