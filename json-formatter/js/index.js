@@ -8,14 +8,37 @@ function debounce(fn) {
     }, 500);
 }
 
+// 获取随机字符串
+function randomStr(num) {
+    if (!num) num = 8;
+    var word = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    var str = '';
+    for (var i = 0; i < num; i++) {
+        str += word[Math.floor(Math.random() * 36)];
+    }
+    return str;
+}
+
 // 判断是否是正确的JSON格式
 function isJSON(val) {
     try {
         return JSON.parse(val);
-    } catch(e) {
+    } catch(e1) {
         // 数据格式错误
-        // console.log(e);
-        return false;
+        // console.log(e1);
+        jsonObj = 'json' + randomStr();
+        // console.log(jsonObj);
+        try {
+            // console.log(jsonObj + '=' + val);
+            // console.log(eval(jsonObj + '=' + val));
+            // console.log(jsonObj);
+            // return window[jsonwtitenwk];
+            return eval(jsonObj + '=' + val);
+        } catch (e2) {
+            // console.log(e2);
+            return false;
+        }
+        // return false;
     }
 }
 
@@ -31,7 +54,7 @@ function fillSpace(count) {
 
 var toString = Object.prototype.toString;
 // 处理数据
-function formatData(ele, data, deep) {
+function formatData(ele, data, deep, innerObj) {
 
     if (!deep) {
         deep = 1;
@@ -41,7 +64,7 @@ function formatData(ele, data, deep) {
     if ('[object Array]' === typeStr) {
         // 数组
         // console.log('arr--',  data);
-        ele.appendChild(creatEle('div', fillSpace(deep - 1) + '[', 'prefix'));
+        ele.appendChild(creatEle('div', fillSpace(deep - 1) + (innerObj ? '<span class="json_key">"' + innerObj + '"</span>' + ':' : '') + '[', 'prefix'));
 
         var len = data.length;
 
@@ -61,15 +84,15 @@ function formatData(ele, data, deep) {
                 ele.append(div);
 
             } else {
-                formatData(ele, val, deep + 1);
+                formatData(ele, val, deep + 1, data[i]);
             }
         }
 
-        ele.appendChild(creatEle('div', fillSpace(deep - 1) + ']', 'subfix'));
+        ele.appendChild(creatEle('div', fillSpace(deep - 1) + ']' + (innerObj ? ',' : ''), 'subfix'));
     } else if ('[object Object]' === typeStr) {
         // 对象
         // console.log('obj--',  data);
-        ele.appendChild(creatEle('div', fillSpace(deep - 1) + '{', 'prefix'));
+        ele.appendChild(creatEle('div', fillSpace(deep - 1) + (innerObj ? '<span class="json_key">"' + innerObj + '"</span>' + ':' : '') + '{', 'prefix'));
 
         var keyList = []; // 获取所有的key
 
@@ -97,13 +120,13 @@ function formatData(ele, data, deep) {
                 div.append(spanKey, ':', spanVal, count === keyLen ? '' : ',');
                 ele.append(div);
             } else {
-                formatData(ele, val, deep + 1);
+                formatData(ele, val, deep + 1, key);
             }
             
         }
         // ele.lastChild
 
-        ele.appendChild(creatEle('div', fillSpace(deep - 1) + '}', 'subfix'));
+        ele.appendChild(creatEle('div', fillSpace(deep - 1) + '}' + (innerObj ? ',' : ''), 'subfix'));
     }
 }
 
