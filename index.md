@@ -6,4 +6,6 @@
 4. [浏览器内核检测](https://liuli-happyday.github.io/browser/)
 5. [图片压缩&Base64转换](https://liuli-happyday.github.io/tiny-img/)
 
+**感觉有用，记得给个⭐️**
+
 To be Continued...
