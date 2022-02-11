@@ -59,6 +59,7 @@ window.onload = function () {
 
                 lrz(file, {
                     quality: this.quality,
+                    width: 20000,
                 }).then(function(rst) {
                     // 成功后 fileItem.file = 
                     fileItem.message = 'success';
