@@ -4,5 +4,6 @@
 2. [JSON format](https://liuli-happyday.github.io/json-formatter/)
 3. [MAC实用小技巧](https://liuli-happyday.github.io/tips/mac)
 4. [浏览器内核检测](https://liuli-happyday.github.io/browser/)
+5. [图片压缩&Base64转换](https://liuli-happyday.github.io/tiny-img/)
 
 To be Continued...

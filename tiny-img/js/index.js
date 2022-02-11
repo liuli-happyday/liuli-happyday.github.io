@@ -55,7 +55,7 @@ window.onload = function () {
                 if (!/^0.\d$/.test(this.quality)) {
                     this.quality = 0.7
                 }
-                console.log(this.quality);
+                // console.log(this.quality);
 
                 lrz(file, {
                     quality: this.quality,

@@ -70,3 +70,7 @@
 .btn_handle + .btn_handle {
     margin-left: 10px;
 }
+
+.done_tips {
+    margin-bottom: 10px;
+}

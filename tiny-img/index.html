@@ -22,11 +22,11 @@
     <div class="text-danger text-center">使用当前浏览器的压缩，文件过大会比较慢</div>
     <div class="text-info text-center">当前压缩质量为： <input class="text-center" v-model.number="quality" type="text"></div>
     <hr>
-    <div class="text-info text-center">已完成压缩</div>
+    <div class="text-success text-center done_tips">已完成压缩</div>
     <ol class="list-group">
         <li class="list-group-item" v-for="item in fileList" :key="item.id">
-            {{ item.name }}--
-            {{ item.message }}--
+            {{ item.name }} --
+            {{ item.message }} --
             原始大小: {{ item.originSizeStr }} -- 
             压缩后: {{ item.sizeStr }} -- 
             节约: {{ item.savePre }} -- 
