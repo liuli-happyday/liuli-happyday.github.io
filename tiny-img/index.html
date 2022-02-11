@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="在线压缩PNG&JPG图片">
+    <title>在线压缩PNG&JPG图片</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+</head>
+<body>
+<div id="app">
+    <div class="upload">
+        <p class="tips_text">点击或拖拽文件至此</p>
+        <input class="upload_input" ref="uploadFile" accept="image/*" multiple="true" draggable="true" type="file">
+    </div>
+    <br>
+    <div class="text-danger text-center">使用当前浏览器的压缩，文件过大会比较慢</div>
+    <div class="text-info text-center">当前压缩质量为： <input v-model.number="quality" type="text"></div>
+    <hr>
+    <div class="algo-list">
+        已完成压缩
+    </div>
+    <ol class="list-group">
+        <li class="list-group-item" v-for="item in fileList" :key="item.id">
+            {{ item.name }}--
+            {{ item.message }}--
+            原始大小: {{ item.originSizeStr }} -- 
+            压缩后: {{ item.sizeStr }} -- 
+            节约: {{ item.savePre }} -- 
+            <a class="btn_handle" :download="item.name" :href="item.download">下载</a>
+            <a class="btn_handle" @click="showB64(item)">显示base64</a>
+            <a class="btn_handle" @click="handleShowImg(item)">预览</a>
+        </li>
+    </ol>
+
+    <div v-show="showBase64" class="show_modal">
+        <div class="panel panel-default panel_base64">
+            <div class="panel-heading">图片的Base64格式 <a class="base64_close" @click="showBase64=false" href="javascript:void(0);">关闭</a></div>
+            <div class="panel-body base64_body">
+                <textarea :value="base64" readonly class="base64_area" id="" cols="30" rows="10"></textarea>
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+    <div v-if="showImg" class="show_modal">
+        <div class="panel panel-default panel_base64">
+            <div class="panel-heading">图片预览 <a class="base64_close" @click="showImg=false" href="javascript:void(0);">关闭</a></div>
+            <div class="panel-body base64_body">
+                <img :src="base64" alt="">
+            </div>
+        </div>
+    </div><!-- /.modal -->
+
+
+</div>
+<!-- 引入VUE库 -->
+<script src="./js/vue.js"></script>
+<!-- 引入压缩文件库 -->
+<script src="./js/lrz.js"></script>
+<!--引入主文件-->
+<script src="./js/index.js"></script>
+</body>
+</html>
