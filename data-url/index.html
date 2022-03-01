@@ -5,8 +5,283 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataURL数据转换</title>
+    <style>
+        html, body, div, p, ol, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #fff;
+            padding: 30px;
+            line-height: 2em;
+            font-size: 16px;
+            color: #333;
+        }
+        .upload {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto 0;
+            border: 1px dashed #999;
+            height: 150px;
+            position: relative;
+            border-radius: 8px;
+        }
+        .upload:hover {
+            border-color: deepskyblue;
+        }
+        .upload p{
+            height: 100%;
+            width: 100%;
+            line-height: 150px;
+            font-size: 16px;
+            text-align: center;
+            color: #333;
+        }
+        .upload .upload_input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            cursor: pointer;
+            opacity: 0;
+        }
+        .img_list {
+            /* padding-left: 20px; */
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .img_list li {
+            list-style-type: none;
+            padding: 4px;
+        }
+        .preview {
+            width: 300px;
+            height: 300px;
+            border: 1px solid #aaa;
+            border-radius: 8px;
+            background: no-repeat center center/cover;
+            cursor: pointer;
+        }
+        .file_info {
+            text-align: center;
+            margin-top: 6px;
+            color: cornflowerblue;
+            cursor: pointer;
+            width: 300px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        .tips {
+            margin: 30px 0;
+            text-align: center;
+            color: #f00;
+        }
+        .show {
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* right: 0;
+            bottom: 0; */
+            height: 100vh;
+            width: 100vw;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            overflow: auto;
+            padding: 30px;
+        }
+        .show::before {
+            content: "+";
+            font-size: 50px;
+            color: #fff;
+            text-shadow: 0 0 3px #999;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            transform: rotate(45deg);
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .scale {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .base64_text {
+            background-color: #fff;
+            border-radius: 8px;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: auto;
+            word-break: break-all;
+            word-wrap: break-word;
+            white-space: normal;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
-    
+    <a style="position: absolute;bottom: 10px; right: 10px;font-size: 14px;" href="./">返回首页</a>
+    <div id="app">
+        <!-- 文件拖拽上传区 -->
+        <div class="upload">
+            <p class="tips_text">点击或拖拽文件至此</p>
+            <input class="upload_input" id="uploadFile" accept="image/*" multiple="true" draggable="true" type="file">
+        </div>
+
+        <p class="tips">点击图片名称查看base64</p>
+
+        <!-- 图片预览列表 -->
+        <ul id="imgList" class="img_list"></ul>
+
+        <!-- 点击查看图片 -->
+        <div id="dialog" class="show">
+            <img class="scale" id="bigImg" src="" alt="">
+        </div>
+
+        <!-- 点击查看Base64 -->
+        <div id="dialog_b" class="show">
+            <div id="base64_text" class="base64_text"></div>
+        </div>
+
+    </div>
+    <script>
+
+        const imgListEle = document.getElementById('imgList');
+        const dialog = document.getElementById('dialog');
+        const dialog_b = document.getElementById('dialog_b');
+        const base64_text = document.getElementById('base64_text');
+        const bigImg = document.getElementById('bigImg');
+        const b64List = [];
+
+        const uploadFile = document.getElementById('uploadFile');
+        uploadFile.addEventListener('change', function(e) {
+            const list = uploadFile.files;
+            const pList = [];
+
+            for (let i = 0; i< list.length; i++) {
+                const file = list[i];
+                const { name, size } = file;
+                // console.log(file);
+                pList.push(blobToDataURL(file));
+                b64List.push({ name, size, file: '' })
+            }
+
+            const pl = pList.length;
+            const bl = b64List.length;
+            const delta = bl - pl;
+            Promise.allSettled(pList).then(res => {
+                // console.log(res);
+                res.forEach((r, index) => {
+                    // console.log(index);
+                    if ('fulfilled' === r.status)
+                    // b64List.push(r.value);
+                    b64List[delta + index].file = r.value;
+                });
+                uploadFile.value = ''; // 清除缓存
+                // 显示上传信息
+                buildDom();
+            });
+        });
+
+        // 列表点击事件
+        imgListEle.addEventListener('click', function(e) {
+            // console.log(e);
+            const ele = e.target || e.srcElement;
+            let index = 0;
+            if ('preview' === ele.className) {
+                index = +ele.parentElement.getAttribute('data-id');
+                bigImg.setAttribute('src', b64List[index].file);
+                dialog.style.display = 'flex';
+                console.log('图片预览');
+            } else if ('file_info' === ele.className) {
+                index = +ele.parentElement.getAttribute('data-id');
+                base64_text.innerText = b64List[index].file;
+                dialog_b.style.display = 'flex';
+                console.log('查看base64');
+            }
+        });
+
+        // 防止穿透
+        dialog.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dialog.style.display = 'none';
+        });
+
+        // 防止穿透
+        dialog_b.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dialog_b.style.display = 'none';
+        });
+
+        // 点击图片事件
+        bigImg.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        bigImg.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dialog.style.display = 'none';
+        });
+
+        // 点击base64事件
+        base64_text.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        // 数据转换
+        function blobToDataURL(blob) {
+            const reader = new FileReader();
+
+            return new Promise((resolve, reject) => {
+
+                reader.addEventListener('load', () => {
+                    const url = reader.result;
+                    resolve(url);
+                }, false);
+
+                reader.addEventListener('error', (e) => {
+                    reject(e);
+                }, false)
+
+                reader.readAsDataURL(blob)
+            });
+        }
+
+        // 构建DOM节点
+        function buildDom() {
+            let html = '';
+            b64List.forEach((file, index) => {
+                html += `
+                    <li data-id="${index}">
+                        <div class="preview" style="background-image:url(${file.file})"></div>
+                        <div class="file_info">(${getSizeText(file.size)}) ${file.name}</div>
+                    </li>
+                `
+            });
+            imgListEle.innerHTML = html;
+        }
+
+        // 单位转换
+        function getSizeText(byte) {
+            if (byte > 1048576) {
+                return (byte / 1048576).toFixed(3) + ' MB';
+            }
+            if (byte > 1024) {
+                return (byte / 1024).toFixed(3) + ' KB';
+            }
+            return byte + ' B';
+        }
+    </script>
 </body>
 </html>

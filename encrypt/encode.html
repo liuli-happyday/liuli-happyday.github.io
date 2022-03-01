@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64和MD5加解密</title>
+    <link rel="stylesheet" href="../common-css/bootstrap.min.css">
+    <style>
+        #app {
+            padding: 30px;
+        }
+        .base64, .md5 {
+            padding: 20px 0;
+        }
+        .up, .down {
+            margin: 20px 0;
+        }
+        .btn + .btn {
+            margin-left: 16px;
+        }
+    </style>
+</head>
+<body>
+    <a style="position: absolute;bottom: 10px; right: 10px;font-size: 14px;" href="./">返回首页</a>
+    <div id="app">
+        <h1 class="text-center">Base64加解密/MD5加密</h1>
+        <ul class="nav nav-tabs">
+            <li role="presentation" @click="activeTab = 'base64'" :class="{'active': 'base64' === activeTab}"><a href="javascript:void(0);">Base64</a></li>
+            <li role="presentation" @click="activeTab = 'md5'" :class="{'active': 'md5' === activeTab}"><a href="javascript:void(0);">MD5</a></li>
+        </ul>
+        <div v-if="'base64' === activeTab" class="base64">
+            <div class="up">
+                <textarea v-model="b64Input" class="form-control" rows="8" placeholder="请输入要加密解密的内容"></textarea>
+            </div>
+            <div class="btns">
+                <button @click="bEncode" type="button" class="btn btn-primary">加密</button>
+                <button @click="bDecode" type="button" class="btn btn-primary">解密</button>
+            </div>
+            <div class="down">
+                <textarea v-model="b64Output" class="form-control" rows="8" placeholder="输出。。。"></textarea>
+            </div>
+        </div>
+
+        <div v-if="'md5' === activeTab" class="md5">
+            <div class="up">
+                <textarea v-model="md5Input" class="form-control" rows="8" placeholder="请输入要加密解密的内容"></textarea>
+            </div>
+            <div class="btns">
+                <button @click="mEncode" type="button" class="btn btn-primary">加密</button>
+            </div>
+            <div class="down">
+                <textarea v-model="md5Output" class="form-control" rows="8" placeholder="输出。。。"></textarea>
+            </div>
+        </div>
+
+    </div>
+    <script src="../common-js/vue.global.min.js"></script>
+    <script src="../common-js/base64.min.js"></script>
+    <script src="../common-js/md5.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    activeTab: 'base64', // base64 md5
+                    b64Input: '', // base64输入
+                    b64Output: '', // base64输出
+                    md5Input: '', // md5输入
+                    md5Output: '', // md5输出
+                };
+            },
+            methods: {
+                // base64加密
+                bEncode() {
+                    if (!this.b64Input) return;
+                    try {
+                        //
+                        this.b64Output = Base64.encode(this.b64Input);
+                    } catch(e) {
+                        console.log(e);
+                    }
+                },
+                // base64解密
+                bDecode() {
+                    if (!this.b64Input) return;
+                    try {
+                        //
+                        this.b64Output = Base64.decode(this.b64Input);
+                    } catch(e) {
+                        console.log(e);
+                    }
+                },
+                // MD5加密
+                mEncode() {
+                    if (!this.md5Input) return;
+                    try {
+                        //
+                        this.md5Output = md5(this.md5Input);
+                    } catch(e) {
+                        console.log(e);
+                    }
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
