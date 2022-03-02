@@ -8,6 +8,6 @@
 6. [图片转Base64](https://liuli-happyday.github.io/data-url/)
 7. [Base64加解密/MD5加密](https://liuli-happyday.github.io/encrypt/encode.html)
 
-**感觉有用，记得给个⭐️**
+[**感觉有用，记得给个⭐️**](https://github.com/liuli-happyday/liuli-happyday.github.io)
 
 To be Continued...
